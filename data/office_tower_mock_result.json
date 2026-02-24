@@ -1,0 +1,68 @@
+{
+    "schema_pass": true,
+    "summary": {
+        "checks_total": 7,
+        "passed": 7,
+        "failed": 0,
+        "score": 100,
+        "compliance_percent": 100
+    },
+    "article_1_results": [
+        {
+            "rule_id": "1.1",
+            "pass": true,
+            "element": "Base District Regulations (OT-55)",
+            "description_en": "Office Tower zone (OT-55) with 55m height and 16.0 FAR. Current height is 52m, FAR is 15.2 (Compliant).",
+            "description_ar": "منطقة أبراج مكاتب (OT-55) بارتفاع 55 متر ونسبة مساحة طابقية 16.0. الارتفاع الحالي 52 متر، والنسبة 15.2 (مطابق)."
+        }
+    ],
+    "article_2_results": [
+        {
+            "rule_id": "2.1",
+            "pass": true,
+            "element": "Commercial Uses",
+            "description_en": "General Business and Professional services detected on all floors (Compliant).",
+            "description_ar": "تم اكتشاف خدمات أعمال عامة وخدمات مهنية في جميع الطوابق (مطابق)."
+        },
+        {
+            "rule_id": "2.3",
+            "pass": true,
+            "element": "Retail/Hospitality Floors",
+            "description_en": "Retail and hospitality services restricted to floors 1-5 (Compliant).",
+            "description_ar": "تم قصر خدمات التجزئة والضيافة على الطوابق من 1 إلى 5 (مطابق)."
+        }
+    ],
+    "article_3_results": [
+        {
+            "rule_id": "3.1",
+            "pass": true,
+            "element": "Plot Size",
+            "description_en": "Plot size is 1,800 sqm (Below 2,500 sqm limit).",
+            "description_ar": "مساحة القسيمة 1,800 متر مربع (أقل من الحد الأقصى 2,500 متر مربع)."
+        },
+        {
+            "rule_id": "3.3",
+            "pass": true,
+            "element": "Podium Parking GFA",
+            "description_en": "Podium parking areas correctly excluded from GFA calculations.",
+            "description_ar": "تم استبعاد مساحات مواقف المنصة بشكل صحيح من حسابات المساحة الطابقية."
+        }
+    ],
+    "article_4_results": [
+        {
+            "rule_id": "4.1",
+            "pass": true,
+            "element": "Mussallah Facilities",
+            "description_en": "Prayer rooms provided on floor 4 and roof floor (Compliant).",
+            "description_ar": "تم توفير مصليات في الطابق الرابع وطابق السطح (مطابق)."
+        },
+        {
+            "rule_id": "4.2",
+            "pass": true,
+            "element": "Indoor Recreation",
+            "description_en": "Recreational areas located within permitted floor ranges (Compliant).",
+            "description_ar": "تقع المناطق الترفيهية ضمن نطاقات الطوابق المسموح بها (مطابق)."
+        }
+    ],
+    "note": "Office Tower specialized validation results"
+}

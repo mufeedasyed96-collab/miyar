@@ -1,0 +1,106 @@
+{
+    "schema_pass": true,
+    "summary": {
+        "checks_total": 12,
+        "passed": 11,
+        "failed": 1,
+        "score": 92,
+        "compliance_percent": 92
+    },
+    "article_1_results": [
+        {
+            "rule_id": "1.1",
+            "pass": true,
+            "element": "Base District Parameters (OB-31)",
+            "description_en": "Building height is 28m (Max 31m). FAR is 7.2 (Max 8.5).",
+            "description_ar": "ارتفاع المبنى 28 متر (الحد الأقصى 31 متر). نسبة المساحة الطابقية 7.2 (الحد الأقصى 8.5)."
+        }
+    ],
+    "article_2_results": [
+        {
+            "rule_id": "2.1",
+            "pass": true,
+            "element": "Permitted Uses",
+            "description_en": "Office use detected on all floors.",
+            "description_ar": "تم اكتشاف استخدامات مكتبية في جميع الطوابق."
+        },
+        {
+            "rule_id": "2.2",
+            "pass": true,
+            "element": "Ground Floor Services",
+            "description_en": "Retail trade detected on ground floor only.",
+            "description_ar": "تم اكتشاف تجارة التجزئة في الطابق الأرضي فقط."
+        }
+    ],
+    "article_3_results": [
+        {
+            "rule_id": "3.1",
+            "pass": true,
+            "element": "Mezzanine Area",
+            "description_en": "Mezzanine area is 85% of ground floor (Max 100%).",
+            "description_ar": "مساحة الميزانين 85% من الطابق الأرضي (الحد الأقصى 100%)."
+        },
+        {
+            "rule_id": "3.2",
+            "pass": true,
+            "element": "Mezzanine Height",
+            "description_en": "Ground + Mezzanine total height is 6.5m (Max 7m).",
+            "description_ar": "إجمالي ارتفاع الأرضي والميزانين 6.5 متر (الحد الأقصى 7 متر)."
+        }
+    ],
+    "article_4_results": [
+        {
+            "rule_id": "4.1",
+            "pass": true,
+            "element": "Roof Coverage",
+            "description_en": "Roof coverage is 45% (Max 60%).",
+            "description_ar": "تغطية السطح 45% (الحد الأقصى 60%)."
+        },
+        {
+            "rule_id": "4.2",
+            "pass": false,
+            "element": "Roof Structure Setback",
+            "description_en": "Roof room setback is 1.5m from North side (Min 2m).",
+            "description_ar": "ارتداد غرفة السطح 1.5 متر من الجهة الشمالية (الحد الأدنى 2 متر).",
+            "details": {
+                "reason": "North side setback fails minimum requirement",
+                "reason_ar": "ارتداد الجانب الشمالي لا يستوفي الحد الأدنى المطلوب",
+                "solution": "Relocate or resize roof structure to maintain 2m setback",
+                "solution_ar": "إعادة نقل أو تغيير حجم هيكل السطح للحفاظ على ارتداد 2 متر"
+            }
+        }
+    ],
+    "article_5_results": [
+        {
+            "rule_id": "5.1",
+            "pass": true,
+            "element": "Fence Height",
+            "description_en": "Fence height is 2.2m (Range 2.0-2.5m).",
+            "description_ar": "ارتفاع السور 2.2 متر (النطاق 2.0-2.5 متر)."
+        },
+        {
+            "rule_id": "5.2",
+            "pass": true,
+            "element": "Fence Transparency",
+            "description_en": "Street-facing fence uses semi-transparent iron structure.",
+            "description_ar": "السور المواجه للشارع يستخدم هيكل حديدي شبه شفاف."
+        }
+    ],
+    "article_6_results": [
+        {
+            "rule_id": "6.1",
+            "pass": true,
+            "element": "Side Projections",
+            "description_en": "Projections are 3.5m from side plot line (Min 3m).",
+            "description_ar": "البروزات على بعد 3.5 متر من خط القسيمة الجانبي (الحد الأدنى 3 متر)."
+        },
+        {
+            "rule_id": "6.2",
+            "pass": true,
+            "element": "Shade Projections",
+            "description_en": "Shade structure projects 1.8m beyond plot (Max 2m).",
+            "description_ar": "هيكل المظلة يبرز 1.8 متر خارج القسيمة (الحد الأقصى 2 متر)."
+        }
+    ],
+    "note": "Standardized office validation results"
+}

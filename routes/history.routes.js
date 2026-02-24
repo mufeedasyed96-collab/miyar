@@ -154,6 +154,7 @@ router.get('/', authMiddleware, async (req, res) => {
             id: item._id.toString(),
             projectId: item._id.toString(),
             applicationId: item.applicationId || item._id.toString(),
+            applicationNo: item.applicationNo || item._id.toString(),
             userId: item.createdBy,
             owner: item.ownerName || null,
             fileName: item.latestVersion?.fileName || `Project ${item._id}`,
@@ -170,6 +171,7 @@ router.get('/', authMiddleware, async (req, res) => {
             projectData: {
                 _id: item._id.toString(),
                 applicationId: item.applicationId || item._id.toString(),
+                applicationNo: item.applicationNo || item._id.toString(),
                 projectType: item.projectType,
                 ownerName: item.ownerName,
                 clientMetadata: item.clientMetadata || null,

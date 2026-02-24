@@ -1,0 +1,104 @@
+{
+    "summary": {
+        "schema_pass": false,
+        "total_checks": 9,
+        "passed_checks": 8,
+        "failed_checks": 1,
+        "warning_checks": 0,
+        "critical_errors": 0,
+        "score": 89.0
+    },
+    "schema_pass": false,
+    "article_1_results": [
+        {
+            "id": "1.1",
+            "status": "PASS",
+            "condition": "Definitions Check",
+            "message": "Required agricultural terms (ezba, farm resthouse) defined correctly",
+            "actual_value": "Compliant",
+            "expected_value": "Required"
+        }
+    ],
+    "article_2_results": [
+        {
+            "id": "2.1",
+            "status": "PASS",
+            "rule_id": "2.1",
+            "condition": "Permitted Use",
+            "message": "Plot designated for agricultural and livestock use with associated facilities",
+            "actual_value": "Agricultural / Livestock",
+            "expected_value": "Agricultural / Livestock"
+        }
+    ],
+    "article_3_results": [
+        {
+            "id": "3.1",
+            "status": "PASS",
+            "rule_id": "3.1",
+            "condition": "Plot Components",
+            "message": "All detected components are within the permitted list",
+            "actual_value": "Resthouse, Worker Housing, Warehouse",
+            "expected_value": "Resthouse, Worker Housing, Warehouse, Barn"
+        }
+    ],
+    "article_5_results": [
+        {
+            "id": "5.1",
+            "status": "FAIL",
+            "rule_id": "5.1",
+            "condition": "Building Coverage",
+            "message": "Building coverage exceeds the maximum permitted 30% of agricultural plot area",
+            "actual_value": "35%",
+            "expected_value": "≤ 30%"
+        },
+        {
+            "id": "5.4",
+            "status": "PASS",
+            "rule_id": "5.4",
+            "condition": "Resthouse Area",
+            "message": "Resthouse area is within the maximum permitted limit",
+            "actual_value": "680 m²",
+            "expected_value": "≤ 1000 m²"
+        },
+        {
+            "id": "5.5",
+            "status": "PASS",
+            "rule_id": "5.5",
+            "condition": "Worker Housing Area",
+            "message": "Worker housing area is within the maximum permitted limit",
+            "actual_value": "85 m²",
+            "expected_value": "≤ 100 m²"
+        },
+        {
+            "id": "5.6",
+            "status": "PASS",
+            "rule_id": "5.6",
+            "condition": "Warehouse Area",
+            "message": "Warehouse area is within the maximum permitted limit",
+            "actual_value": "150 m²",
+            "expected_value": "≤ 200 m²"
+        }
+    ],
+    "article_6_results": [
+        {
+            "id": "6.1",
+            "status": "PASS",
+            "rule_id": "6.1",
+            "condition": "Setbacks",
+            "message": "Street setback and neighbor setback meet minimum requirements",
+            "actual_value": "Street: 2.5 m, Neighbors: 2.0 m",
+            "expected_value": "Street: ≥ 2.0 m, Neighbors: ≥ 1.5 m"
+        }
+    ],
+    "article_8_results": [
+        {
+            "id": "8.1",
+            "status": "PASS",
+            "rule_id": "8.1",
+            "condition": "Building Height",
+            "message": "Resthouse height is within maximum permitted limit (G+1+R)",
+            "actual_value": "10.5 m",
+            "expected_value": "≤ 12.0 m"
+        }
+    ]
+}

@@ -1,0 +1,282 @@
+{
+    "summary": {
+        "schema_pass": false,
+        "total_checks": 78,
+        "passed_checks": 71,
+        "failed_checks": 5,
+        "warning_checks": 2,
+        "critical_errors": 0,
+        "score": 91.0
+    },
+    "schema_pass": false,
+    "article_1_results": [
+        {
+            "id": "1.1",
+            "status": "PASS",
+            "condition": "Definitions Check",
+            "message": "Required terms defined correctly",
+            "actual_value": "Compliant",
+            "expected_value": "Required"
+        }
+    ],
+    "article_2_results": [
+        {
+            "id": "2.1",
+            "status": "PASS",
+            "condition": "Private Residence Only",
+            "message": "Project is designated for private residence",
+            "actual_value": "Private Residence",
+            "expected_value": "Private Residence"
+        },
+        {
+            "id": "2.2",
+            "status": "PASS",
+            "rule_id": "2.2",
+            "condition": "Total Floor Area",
+            "message": "Floor area matches Al Falah standard model",
+            "actual_value": "507.69 m²",
+            "expected_value": "507.69 m²"
+        }
+    ],
+    "article_3_results": [
+        {
+            "id": "3.1",
+            "status": "PASS",
+            "condition": "Permitted Components",
+            "message": "All components are within permitted Al Falah list",
+            "actual_value": "Villa, Guard Room, Elec. Room",
+            "expected_value": "Villa, Guard Room, Elec. Room"
+        }
+    ],
+    "article_4_results": [
+        {
+            "id": "4.1",
+            "status": "PASS",
+            "condition": "Single Villa Per Plot",
+            "message": "Only one villa detected on plot",
+            "actual_value": "1",
+            "expected_value": "1"
+        }
+    ],
+    "article_5_results": [
+        {
+            "id": "5.1",
+            "status": "FAIL",
+            "rule_id": "5.1",
+            "condition": "Building Coverage",
+            "message": "Building coverage exceeds the maximum permitted 70% of plot area",
+            "actual_value": "72.5%",
+            "expected_value": "70%"
+        },
+        {
+            "id": "5.2",
+            "status": "PASS",
+            "condition": "Open Area",
+            "message": "Open area percentage is compliant",
+            "actual_value": "27.5%",
+            "expected_value": ">= 30%"
+        }
+    ],
+    "article_6_results": [
+        {
+            "id": "6.1",
+            "status": "FAIL",
+            "rule_id": "6.1",
+            "condition": "Front Setback",
+            "message": "Front setback is less than the required 8m for Al Falah projects",
+            "actual_value": "6.5 m",
+            "expected_value": "8.0 m"
+        },
+        {
+            "id": "6.2",
+            "status": "PASS",
+            "condition": "Annex Setback",
+            "message": "Annex built on boundary correctly",
+            "actual_value": "0 m",
+            "expected_value": "0 m"
+        }
+    ],
+    "article_7_results": [
+        {
+            "id": "7.1",
+            "status": "PASS",
+            "condition": "Separation Distance",
+            "message": "Minimum 1.5m separation between buildings maintained",
+            "actual_value": "1.8 m",
+            "expected_value": "1.5 m"
+        }
+    ],
+    "article_8_results": [
+        {
+            "id": "8.1",
+            "status": "PASS",
+            "condition": "Number of Floors",
+            "message": "Villa is G+1 as required",
+            "actual_value": "G+1",
+            "expected_value": "G+1"
+        },
+        {
+            "id": "8.4",
+            "status": "PASS",
+            "condition": "Ground Floor Level",
+            "message": "Level is above minimum 45cm",
+            "actual_value": "0.55 m",
+            "expected_value": ">= 0.45 m"
+        }
+    ],
+    "article_9_results": [
+        {
+            "id": "9.1",
+            "status": "PASS",
+            "condition": "Basement Visible Portion",
+            "message": "Basement visibility is within limits",
+            "actual_value": "1.2 m",
+            "expected_value": "< 1.85 m"
+        }
+    ],
+    "article_10_results": [
+        {
+            "id": "10.1",
+            "status": "FAIL",
+            "rule_id": "10.1",
+            "condition": "Roof Floor Prohibited",
+            "message": "Roof floor detected. Al Falah regulations prohibit roof floor extensions.",
+            "actual_value": "Roof Floor Present",
+            "expected_value": "No Roof Floor"
+        }
+    ],
+    "article_11_results": [
+        {
+            "id": "11.1",
+            "status": "PASS",
+            "condition": "Main Hall Area",
+            "message": "Main hall area meets minimum requirement",
+            "actual_value": "24 m²",
+            "expected_value": "20 m²"
+        },
+        {
+            "id": "11.2",
+            "status": "FAIL",
+            "rule_id": "11.2",
+            "condition": "Master Bedroom Area",
+            "message": "Master bedroom area is below the required 16m²",
+            "actual_value": "14.5 m²",
+            "expected_value": "16 m²"
+        },
+        {
+            "id": "11.6",
+            "status": "PASS",
+            "condition": "Kitchen Area",
+            "message": "Kitchen area meets minimum requirement",
+            "actual_value": "14 m²",
+            "expected_value": "12 m²"
+        }
+    ],
+    "article_12_results": [
+        {
+            "id": "12.1",
+            "status": "PASS",
+            "condition": "Ventilation & Lighting",
+            "message": "Glazed area and ventilation meet percentage requirements",
+            "actual_value": "9% Glazed, 5% Vent",
+            "expected_value": "8% Glazed, 4% Vent"
+        }
+    ],
+    "article_13_results": [
+        {
+            "id": "13.1",
+            "status": "PASS",
+            "condition": "Single Staircase",
+            "message": "No second staircase detected",
+            "actual_value": "1",
+            "expected_value": "1"
+        }
+    ],
+    "article_14_results": [
+        {
+            "id": "14.1",
+            "status": "PASS",
+            "condition": "Fence Modification",
+            "message": "No unauthorized fence modifications detected",
+            "actual_value": "Original",
+            "expected_value": "Original"
+        }
+    ],
+    "article_15_results": [
+        {
+            "id": "15.1",
+            "status": "PASS",
+            "condition": "Entrance Location",
+            "message": "Entrance is from approved corridor",
+            "actual_value": "Approved",
+            "expected_value": "Approved"
+        }
+    ],
+    "article_16_results": [
+        {
+            "id": "16.1",
+            "status": "PASS",
+            "condition": "Car Parking",
+            "message": "Parking provided within plot",
+            "actual_value": "Present",
+            "expected_value": "Required"
+        },
+        {
+            "id": "16.2",
+            "status": "PASS",
+            "condition": "Parking Dimensions",
+            "message": "Parking spaces meet minimum 3x6m dimensions",
+            "actual_value": "3.5x6.5 m",
+            "expected_value": "3x6 m"
+        }
+    ],
+    "article_17_results": [
+        {
+            "id": "17.1",
+            "status": "PASS",
+            "condition": "Aesthetic Projections",
+            "message": "Projections are within permitted limits",
+            "actual_value": "Compliant",
+            "expected_value": "Within Limits"
+        }
+    ],
+    "article_18_results": [
+        {
+            "id": "18.2",
+            "status": "PASS",
+            "condition": "Villa Subdivision",
+            "message": "No subdivision into independent units detected",
+            "actual_value": "Single Unit",
+            "expected_value": "Single Unit"
+        },
+        {
+            "id": "18.3",
+            "status": "PASS",
+            "condition": "Kitchen Count",
+            "message": "Only one main kitchen detected",
+            "actual_value": "1",
+            "expected_value": "1"
+        }
+    ],
+    "article_19_results": [
+        {
+            "id": "19.1",
+            "status": "PASS",
+            "condition": "Suite Access",
+            "message": "Suite access is only through main villa entrance",
+            "actual_value": "Compliant",
+            "expected_value": "Internal Access"
+        }
+    ],
+    "article_20_results": [
+        {
+            "id": "20.1",
+            "status": "PASS",
+            "rule_id": "20.1",
+            "condition": "Annex in Front Setback",
+            "message": "Annex matches Al Falah specific permission for front setback",
+            "actual_value": "Compliant",
+            "expected_value": "Allowed"
+        }
+    ]
+}

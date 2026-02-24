@@ -17,7 +17,7 @@ const PREFIX_MAP = {
     AF: ["alfalah_villa"],
     YV: ["yas_villa"],
     BR: ["bridges"],
-    RD: ["roads", "roads_and_access"],
+    RD: ["roads", "tunnels"],
     RB: ["roads_bridges"],
     WH: ["warehouse"],
     SM: ["shopping_mall"],
@@ -26,7 +26,6 @@ const PREFIX_MAP = {
     ST: ["structural", "structural_plan"],
     FS: ["fire_safety", "fire_safety_plan"],
     FM: ["farm"],
-    UT: ["utilities"],
     DR: ["drainage"],
     CM: ["commercial"],
     IN: ["infrastructure"],
@@ -43,6 +42,29 @@ function col(name) {
     const db = getDb();
     if (!db) throw new Error("Database connection failed");
     return db.collection(name);
+}
+
+/**
+ * Finds the next available applicationNo with a version suffix if needed.
+ * e.g. BR-1000 exists -> BR-1000-v2
+ */
+async function findNextAvailableApplicationNo(baseNo) {
+    const projects = col("projects");
+    let currentNo = baseNo;
+    let version = 1;
+
+    // Check if the base exists
+    let exists = await projects.findOne({ applicationNo: currentNo });
+    if (!exists) return currentNo;
+
+    // Base exists, find next -vX
+    while (exists) {
+        version++;
+        currentNo = `${baseNo}-v${version}`;
+        exists = await projects.findOne({ applicationNo: currentNo });
+    }
+
+    return currentNo;
 }
 
 /**
@@ -142,7 +164,7 @@ router.get("/:projectId/discipline-status", authMiddleware, async (req, res) => 
         });
     } catch (err) {
         console.error("[Projects] Discipline status error:", err);
-        return res.status(500).json({ error: "Internal server error" });
+        return res.status(500).json({ error: err.message });
     }
 });
 
@@ -181,7 +203,7 @@ router.get("/:projectId/certificate", authMiddleware, async (req, res) => {
         return res.json(cert);
     } catch (err) {
         console.error("[Projects] Get certificate error:", err);
-        return res.status(500).json({ error: "Internal server error" });
+        return res.status(500).json({ error: err.message });
     }
 });
 
@@ -226,7 +248,7 @@ router.get("/:projectId/certificate/download", authMiddleware, async (req, res) 
         return res.download(filePath, filename);
     } catch (err) {
         console.error("[Projects] Download certificate error:", err);
-        return res.status(500).json({ error: "Internal server error" });
+        return res.status(500).json({ error: err.message });
     }
 });
 
@@ -272,7 +294,7 @@ router.post("/:projectId/submit", authMiddleware, checkProjectLock, async (req, 
         });
     } catch (err) {
         console.error("[Projects] Submit error:", err);
-        return res.status(500).json({ error: "Internal server error" });
+        return res.status(500).json({ error: err.message });
     }
 });
 
@@ -364,7 +386,7 @@ router.post(
             return res.json({ message: "Decision recorded successfully", status: newStatus });
         } catch (err) {
             console.error("[Projects] Decision error:", err);
-            return res.status(500).json({ error: "Internal server error" });
+            return res.status(500).json({ error: err.message });
         }
     }
 );
@@ -587,7 +609,7 @@ router.post("/", authMiddleware, async (req, res) => {
             applicationNo = `${prefix}-${rawAppId}`;
         }
 
-        // Resolve owner name from metadata if exists
+        // 1. Resolve owner name from metadata if exists
         let resolvedOwnerName = ownerName || "";
         if (rawAppId) {
             const clientMeta = await clientMetadataCollection.findOne({ applicationId: rawAppId });
@@ -595,81 +617,12 @@ router.post("/", authMiddleware, async (req, res) => {
             if (clientName) resolvedOwnerName = clientName;
         }
 
-        // 1. Check if we should update an existing project (by applicationNo or _id)
-        let existing = null;
+        // 2. Versioning Logic: If applicationNo exists, find next available version suffix
         if (applicationNo) {
-            existing = await projects.findOne({
-                $or: [{ applicationNo: applicationNo }, { _id: applicationNo }],
-                createdBy
-            });
+            applicationNo = await findNextAvailableApplicationNo(applicationNo);
         }
 
-        if (existing) {
-            const nextVersion = (existing.version || 1) + 1;
-
-            // --- VERSION SNAPSHOT LOGIC ---
-            // Archive the CURRENT state to 'project_versions' before overwriting
-            await col("project_versions").insertOne({
-                project_id: existing._id.toString(),
-                version_number: existing.version || 1,
-                snapshot_data: { ...existing },
-                archived_at: new Date(),
-                archived_by: createdBy
-            });
-            // ------------------------------
-
-            await projects.updateOne(
-                { _id: existing._id },
-                {
-                    $set: {
-                        projectType,
-                        ownerName: resolvedOwnerName,
-                        consultantName,
-                        plotNo,
-                        zone,
-                        city,
-                        version: nextVersion,
-                        updatedAt: new Date(),
-                    },
-                    $push: {
-                        statusHistory: {
-                            status: "Updated",
-                            changedBy: createdBy,
-                            changedByEmail: createdByEmail,
-                            changedAt: new Date(),
-                            reason: `Project updated from v${existing.version || 1} to v${nextVersion}`,
-                        },
-                    },
-                }
-            );
-
-            const updatedProject = await projects.findOne({ _id: existing._id });
-
-            return res.status(200).json({
-                id: updatedProject._id.toString(),
-                message: "Project updated successfully",
-                project: {
-                    id: updatedProject._id.toString(),
-                    ...updatedProject,
-                    current_version_number: updatedProject.version || 1,
-                    createdAt: safeIso(updatedProject.createdAt),
-                    updatedAt: safeIso(updatedProject.updatedAt),
-                },
-            });
-        }
-
-        // 2. Uniqueness check for NEW project (prevent VIL-1000 duplicated by someone else or another type)
-        if (applicationNo) {
-            const conflict = await projects.findOne({ applicationNo });
-            if (conflict) {
-                return res.status(409).json({
-                    error: `Application number already exists: ${applicationNo}`,
-                    code: "APP_NO_CONFLICT"
-                });
-            }
-        }
-
-        // 3. New project
+        // 3. New project document
         const newId = applicationNo ? applicationNo : new ObjectId().toString();
 
         const doc = {
@@ -683,7 +636,7 @@ router.post("/", authMiddleware, async (req, res) => {
             plotNo,
             zone,
             city,
-            version: 1,
+            version: 1, // Reset version count for the new versioned ID (the suffix handles the logical version)
             status: "OPEN",
             createdBy,
             createdByEmail,
@@ -714,7 +667,7 @@ router.post("/", authMiddleware, async (req, res) => {
         });
     } catch (err) {
         console.error("[Projects] Create error:", err);
-        return res.status(500).json({ error: "Internal server error" });
+        return res.status(500).json({ error: err.message });
     }
 });
 
@@ -750,7 +703,7 @@ router.get("/:projectId/versions", authMiddleware, async (req, res) => {
         });
     } catch (err) {
         console.error("[Projects] Get versions error:", err);
-        return res.status(500).json({ error: "Internal server error" });
+        return res.status(500).json({ error: err.message });
     }
 });
 
@@ -800,7 +753,7 @@ router.patch("/:id", authMiddleware, checkProjectLock, async (req, res) => {
         return res.json({ message: "Project updated successfully" });
     } catch (err) {
         console.error("[Projects] Update error:", err);
-        return res.status(500).json({ error: "Internal server error" });
+        return res.status(500).json({ error: err.message });
     }
 });
 
@@ -827,7 +780,75 @@ router.get("/:id", authMiddleware, async (req, res) => {
         });
     } catch (err) {
         console.error("[Projects] Get error:", err);
-        return res.status(500).json({ error: "Internal server error" });
+        return res.status(500).json({ error: err.message });
+    }
+});
+
+/**
+ * GET /api/projects/:projectId/results/structural
+ * Returns structural validation results from latest file version
+ */
+router.get("/:projectId/results/structural", authMiddleware, async (req, res) => {
+    const { projectId } = req.params;
+    const userId = req.user.userId;
+
+    try {
+        const projects = col("projects");
+        const fileGroups = col("file_groups");
+        const fileVersions = col("file_versions");
+
+        const project = await resolveProject(projects, projectId, userId);
+        if (!project) return res.status(404).json({ error: "Project not found" });
+
+        const realProjectId = project._id.toString();
+
+        // Check for 'structural' (from structural.routes.js) or 'structural_plan' (legacy)
+        const structuralGroup = await fileGroups.findOne({
+            projectId: realProjectId,
+            type: { $in: ["structural", "structural_plan"] },
+        });
+
+        if (!structuralGroup) {
+            // Return empty/mock if no file uploaded yet
+            // Load default rules layout so UI shows the checklist
+            let allVillaRules = [];
+            try {
+                const config = require('../config/all_villa_str');
+                // Access nested rules array
+                const rules = config.ALL_VILLA_STR_RULES || [];
+                allVillaRules = rules.flatMap(section => section.rules || []);
+            } catch (e) {
+                // Ignore if missing
+            }
+
+            const emptyChecks = allVillaRules.map(rule => ({
+                rule_id: rule.rule_id,
+                title: rule.description_en,
+                status: 'pending',
+                description_ar: rule.description_ar
+            }));
+
+            return res.json({
+                schema_pass: false,
+                summary: { checks_total: emptyChecks.length, passed: 0, failed: 0 },
+                checks: emptyChecks,
+                status: "pending"
+            });
+        }
+
+        const latestVersion = await fileVersions.findOne(
+            { group_id: structuralGroup._id.toString() },
+            { sort: { version_number: -1 } }
+        );
+
+        if (!latestVersion || !latestVersion.results) {
+            return res.json({ schema_pass: false, checks: [] });
+        }
+
+        return res.json(latestVersion.results);
+    } catch (err) {
+        console.error("[Projects] Get structural results error:", err);
+        return res.status(500).json({ error: err.message });
     }
 });
 

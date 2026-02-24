@@ -18,45 +18,49 @@ const TUNNEL_ARTICLES = [
         title_en: "Tunnel Vertical Clearances",
         rules: [
             {
-                rule_id: "T1.1",
+                rule_id: "T.1.1",
                 description_ar: "الخلوص الرأسي للأنفاق على الطرق السريعة",
                 description_en: "Highway tunnels vertical clearance",
                 rule_type: "dimension_min",
                 element: "vertical_clearance_highway_tunnel",
                 min_clearance_m: 6.5,
+                source_ref: "TR-514 §6.5 (4)",
                 notes: "General standard",
                 dwg_checkable: true,
                 requires: ["elevation_data", "tunnel_profile"]
             },
             {
-                rule_id: "T1.2",
+                rule_id: "T.1.2",
                 description_ar: "الخلوص الرأسي للأنفاق في المناطق الحضرية",
                 description_en: "Urban tunnels vertical clearance",
                 rule_type: "dimension_min",
                 element: "vertical_clearance_urban_tunnel",
                 min_clearance_m: 6.0,
+                source_ref: "TR-514 §6.5 (4)",
                 notes: "Urban areas",
                 dwg_checkable: true,
                 requires: ["elevation_data", "tunnel_profile"]
             },
             {
-                rule_id: "T1.3",
+                rule_id: "T.1.3",
                 description_ar: "الخلوص الرأسي للافتات والتهوية داخل الأنفاق",
                 description_en: "Overhead signs/ventilation in tunnels vertical clearance",
                 rule_type: "dimension_min",
                 element: "vertical_clearance_tunnel_equipment",
                 min_clearance_m: 6.5,
+                source_ref: "TR-514 §6.5 (1)",
                 notes: "To bottom of element",
                 dwg_checkable: true,
                 requires: ["elevation_data", "tunnel_profile"]
             },
             {
-                rule_id: "T1.4",
+                rule_id: "T.1.4",
                 description_ar: "الخلوص الرأسي لأنفاق المشاة",
                 description_en: "Pedestrian tunnels vertical clearance",
                 rule_type: "dimension_min",
                 element: "vertical_clearance_pedestrian_tunnel",
                 min_clearance_m: 3.5,
+                source_ref: "TR-514 §6.5",
                 notes: "Minimum",
                 dwg_checkable: true,
                 requires: ["elevation_data", "tunnel_profile"]
@@ -74,40 +78,43 @@ const TUNNEL_ARTICLES = [
         title_en: "Tunnel Cross Section",
         rules: [
             {
-                rule_id: "T2.1",
+                rule_id: "T.2.1",
                 description_ar: "عرض الطريق بين الحواف داخل النفق",
                 description_en: "Roadway width between curbs in tunnel",
                 rule_type: "dimension_min",
                 element: "tunnel_roadway_width",
                 condition: "Approach width + 0.6m minimum",
                 additional_width_m: 0.6,
+                source_ref: "TR-514 §3.10.3",
                 dwg_checkable: true,
                 requires: ["cross_section", "tunnel_profile"]
             },
             {
-                rule_id: "T2.2",
+                rule_id: "T.2.2",
                 description_ar: "الحد الأدنى لعرض الرصيف/الحافة على كل جانب",
                 description_en: "Minimum curb/sidewalk width each side",
                 rule_type: "dimension_min",
                 element: "tunnel_curb_sidewalk_width",
                 min_width_m: 0.6,
+                source_ref: "TR-514 §3.10.3",
                 notes: "Per side",
                 dwg_checkable: true,
                 requires: ["cross_section"]
             },
             {
-                rule_id: "T2.3",
+                rule_id: "T.2.3",
                 description_ar: "العرض الكلي من الجدار إلى الجدار للنفق ثلاثي الحارات",
                 description_en: "3-lane tunnel wall-to-wall minimum width",
                 rule_type: "dimension_min",
                 element: "tunnel_3lane_total_width",
                 min_width_m: 12.75,
+                source_ref: "TR-514 §3.10.3",
                 notes: "Total clearance",
                 dwg_checkable: true,
                 requires: ["cross_section"]
             },
             {
-                rule_id: "T2.4",
+                rule_id: "T.2.4",
                 description_ar: "المقطع المفضل للنفق ثلاثي الحارات",
                 description_en: "Desirable 3-lane tunnel section",
                 rule_type: "dimension_composite",
@@ -118,16 +125,18 @@ const TUNNEL_ARTICLES = [
                     shoulder_width_m: 3.0,
                     walkway_width_m: 0.9
                 },
+                source_ref: "TR-514 §3.10.3",
                 dwg_checkable: true,
                 requires: ["cross_section"]
             },
             {
-                rule_id: "T2.5",
+                rule_id: "T.2.5",
                 description_ar: "عرض ممر السلامة",
                 description_en: "Safety walkway width",
                 rule_type: "dimension",
                 element: "tunnel_safety_walkway",
                 width_m: 0.9,
+                source_ref: "TR-514 §3.10.3",
                 notes: "Beyond shoulders",
                 dwg_checkable: true,
                 requires: ["cross_section"]
@@ -145,42 +154,46 @@ const TUNNEL_ARTICLES = [
         title_en: "Tunnel Alignment",
         rules: [
             {
-                rule_id: "T3.1",
+                rule_id: "T.3.1",
                 description_ar: "المحاذاة الأفقية المفضلة للنفق",
                 description_en: "Tunnel horizontal alignment preference",
                 rule_type: "design_rule",
                 element: "tunnel_horizontal_alignment",
                 preferred: "Tangent alignment",
+                source_ref: "TR-514 §3.10.2",
                 dwg_checkable: true,
                 requires: ["plan_geometry"]
             },
             {
-                rule_id: "T3.2",
+                rule_id: "T.3.2",
                 description_ar: "مسافة الرؤية الأفقية على المنحنيات في الأنفاق",
                 description_en: "Horizontal sight distance on curves in tunnels",
                 rule_type: "design_rule",
                 element: "tunnel_curve_sight_distance",
                 condition: "Widening shoulder on inside of curves may be required",
+                source_ref: "TR-514 §3.10.2",
                 dwg_checkable: false,
                 requires: ["plan_geometry", "sight_distance_analysis"]
             },
             {
-                rule_id: "T3.3",
+                rule_id: "T.3.3",
                 description_ar: "ميول النفق لراحة السائق",
                 description_en: "Tunnel grades for driver comfort",
                 rule_type: "design_principle",
                 element: "tunnel_grades_comfort",
                 condition: "Balance construction costs vs. operating expenses",
+                source_ref: "TR-514 §3.10.2",
                 dwg_checkable: false,
                 requires: ["profile_geometry"]
             },
             {
-                rule_id: "T3.4",
+                rule_id: "T.3.4",
                 description_ar: "تأثير الميول على الإضاءة والتهوية",
                 description_en: "Grade effects on lighting and ventilation",
                 rule_type: "design_consideration",
                 element: "tunnel_grade_effects",
                 considerations: ["length", "grades", "natural ventilation"],
+                source_ref: "TR-514 §3.10.2",
                 dwg_checkable: false,
                 requires: ["profile_geometry", "mechanical_systems"]
             }
@@ -197,23 +210,25 @@ const TUNNEL_ARTICLES = [
         title_en: "Tunnel Traffic Operations",
         rules: [
             {
-                rule_id: "T4.1",
+                rule_id: "T.4.1",
                 description_ar: "الحد الأدنى لمسافة مخارج الرامب من بوابة النفق",
                 description_en: "Exit ramps minimum distance from tunnel portal",
                 rule_type: "spacing_min",
                 element: "tunnel_exit_ramp_spacing",
                 min_distance_m: 300,
                 direction: "downstream",
+                source_ref: "TR-514 §12.3.3",
                 dwg_checkable: true,
                 requires: ["plan_geometry"]
             },
             {
-                rule_id: "T4.2",
+                rule_id: "T.4.2",
                 description_ar: "لا نسج أو دمج أو تفرع داخل الأنفاق",
                 description_en: "No weaving, merging, or diverging within tunnels",
                 rule_type: "design_rule",
                 element: "tunnel_traffic_operations",
                 prohibited: ["weaving", "merging", "diverging"],
+                source_ref: "TR-514 §12.3.13",
                 notes: "Avoid exit/entrance ramps within tunnels",
                 dwg_checkable: true,
                 requires: ["plan_geometry"]
@@ -231,22 +246,24 @@ const TUNNEL_ARTICLES = [
         title_en: "Tunnel Emergency and Maintenance",
         rules: [
             {
-                rule_id: "T5.1",
+                rule_id: "T.5.1",
                 description_ar: "توفير مركبات خدمات الطوارئ",
                 description_en: "Emergency service vehicle provision",
                 rule_type: "operational",
                 element: "tunnel_emergency_vehicles",
                 condition: "24/7 emergency service vehicles if no shoulders",
+                source_ref: "TR-514 §3.10.2",
                 dwg_checkable: false,
                 requires: ["operational_plan"]
             },
             {
-                rule_id: "T5.2",
+                rule_id: "T.5.2",
                 description_ar: "وصول المشاة في الأنفاق للطوارئ والصيانة",
                 description_en: "Pedestrian access in tunnels for emergency and maintenance",
                 rule_type: "design_rule",
                 element: "tunnel_pedestrian_access",
                 condition: "Space for emergency walking and maintenance access",
+                source_ref: "TR-514 §3.10.3",
                 dwg_checkable: true,
                 requires: ["cross_section"]
             }
@@ -263,22 +280,24 @@ const TUNNEL_ARTICLES = [
         title_en: "Special Tunnel Types",
         rules: [
             {
-                rule_id: "T6.1",
+                rule_id: "T.6.1",
                 description_ar: "الحد الأدنى للخلوص الرأسي لأنفاق المشاة",
                 description_en: "Pedestrian tunnel minimum vertical clearance",
                 rule_type: "dimension_min",
                 element: "pedestrian_tunnel_clearance",
                 min_clearance_m: 3.5,
+                source_ref: "TR-514 §6.5",
                 dwg_checkable: true,
                 requires: ["elevation_data", "tunnel_profile"]
             },
             {
-                rule_id: "T6.2",
+                rule_id: "T.6.2",
                 description_ar: "أنفاق منفصلة للمشاة والدراجات",
                 description_en: "Separate tunnels for pedestrians/cyclists consideration",
                 rule_type: "design_consideration",
                 element: "separate_ped_cycle_tunnels",
                 condition: "May be warranted for special uses",
+                source_ref: "TR-514 §3.10.1",
                 dwg_checkable: false,
                 requires: ["traffic_analysis"]
             }

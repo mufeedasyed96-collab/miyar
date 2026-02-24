@@ -1,0 +1,106 @@
+{
+    "summary": {
+        "schema_pass": false,
+        "total_checks": 10,
+        "passed_checks": 9,
+        "failed_checks": 1,
+        "warning_checks": 0,
+        "critical_errors": 0,
+        "score": 90.0
+    },
+    "schema_pass": false,
+    "article_1_results": [
+        {
+            "id": "1.1",
+            "status": "PASS",
+            "condition": "Definitions Check",
+            "message": "Terms (seaside_resort, building_line, boat_berth) defined correctly",
+            "actual_value": "Compliant",
+            "expected_value": "Required"
+        }
+    ],
+    "article_2_results": [
+        {
+            "id": "2.1",
+            "status": "PASS",
+            "condition": "Permitted Use",
+            "message": "Plot used as seaside resort for recreation and temporary residence",
+            "actual_value": "Seaside Resort",
+            "expected_value": "Seaside Resort"
+        },
+        {
+            "id": "2.2",
+            "status": "PASS",
+            "condition": "Permitted Components",
+            "message": "Main rest area and service buildings present",
+            "actual_value": "Main + Service",
+            "expected_value": "Main + Service"
+        }
+    ],
+    "article_3_results": [
+        {
+            "id": "3.1",
+            "status": "FAIL",
+            "condition": "Building Coverage",
+            "message": "Building coverage exceeds 1000sqm or 30% of plot area",
+            "actual_value": "1150 sqm (32%)",
+            "expected_value": "≤ 1000 sqm / 30%"
+        }
+    ],
+    "article_4_results": [
+        {
+            "id": "4.1",
+            "status": "PASS",
+            "condition": "Coastal Setback",
+            "message": "Setback from highest tide line meets minimum requirements (20m for specific islands)",
+            "actual_value": "22.5 m",
+            "expected_value": "≥ 20.0 m"
+        }
+    ],
+    "article_5_results": [
+        {
+            "id": "5.1",
+            "status": "PASS",
+            "condition": "Main Building Height",
+            "message": "Main rest area building height is within 8m limit",
+            "actual_value": "7.2 m",
+            "expected_value": "≤ 8.0 m"
+        },
+        {
+            "id": "5.3",
+            "status": "PASS",
+            "condition": "Floor Level",
+            "message": "Floor level is within 0.45m to 1.20m range from road axis",
+            "actual_value": "0.65 m",
+            "expected_value": "0.45m - 1.20m"
+        }
+    ],
+    "article_6_results": [
+        {
+            "id": "6.1",
+            "status": "PASS",
+            "condition": "Roof Construction",
+            "message": "Roof materials (prefabricated concrete) are compliant",
+            "actual_value": "Prefabricated Concrete",
+            "expected_value": "Approved Materials"
+        },
+        {
+            "id": "6.2",
+            "status": "PASS",
+            "condition": "Foundations",
+            "message": "Structure installed on stable foundations",
+            "actual_value": "Stable",
+            "expected_value": "Stable"
+        }
+    ],
+    "article_7_results": [
+        {
+            "id": "7.1",
+            "status": "PASS",
+            "condition": "Boat Berth Approval",
+            "message": "Approvals from Transport Center and Coast Guard obtained",
+            "actual_value": "Approved",
+            "expected_value": "Required"
+        }
+    ]
+}

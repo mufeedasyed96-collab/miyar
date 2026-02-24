@@ -14,7 +14,32 @@ const FormData = require("form-data");
 const { getDb } = require("../database");
 const { validateFile } = require("../utils/file-validation.util");
 const { sanitizeName } = require("../config/multer.config");
-const { get_all_articles } = require("../config/validation_rules");
+const { get_all_articles: getStandardArticles } = require("../config/validation_rules");
+const { get_all_articles: getAlFalahArticles } = require("../config/alfalahrules");
+const { FARM_ARTICLES } = require("../config/farm_validation_rules");
+const { SEASIDE_RESORT_ARTICLES } = require("../config/seaside_resort_validation_rules");
+const { get_all_articles: getOfficeArticles } = require("../config/office_validation_rules");
+const { OFFICE_TOWER_ARTICLES } = require("../config/office_tower_validation_rules");
+
+// Helper to get articles based on project type
+function getArticlesForType(projectType) {
+    if (projectType === 'alfalah_villa') {
+        return getAlFalahArticles();
+    }
+    if (projectType === 'farm') {
+        return FARM_ARTICLES;
+    }
+    if (projectType === 'seaside_resort') {
+        return SEASIDE_RESORT_ARTICLES;
+    }
+    if (projectType === 'office_building') {
+        return getOfficeArticles();
+    }
+    if (projectType === 'office_tower') {
+        return OFFICE_TOWER_ARTICLES;
+    }
+    return getStandardArticles();
+}
 
 // Streaming SHA256 (memory efficient)
 async function sha256File(filePath) {
@@ -127,6 +152,8 @@ async function validateDwg(req, res) {
 
     let projectId = req.body.projectId || null;
     const groupType = req.body.fileType || "villa_plan";
+
+    console.log(`[validate-dwg] Processing upload: projectId=${projectId}, groupType=${groupType}, file=${originalName}`);
 
     const db = getDb();
     if (!db) {
@@ -303,24 +330,191 @@ async function validateDwg(req, res) {
         // Simulation delay
         await new Promise(resolve => setTimeout(resolve, 1500));
 
-        // Load mock data
-        const mockDataPath = path.join(__dirname, "..", "data", "mock_validation_result.json");
         let validationResult = {};
 
-        try {
-            if (fs.existsSync(mockDataPath)) {
-                const raw = fs.readFileSync(mockDataPath, "utf-8");
-                validationResult = JSON.parse(raw);
-            } else {
+        // 1. Specialized handling for Structural validation
+        if (groupType === 'structural' || groupType === 'structural_plan') {
+            try {
+                const { ALL_VILLA_STR_RULES } = require('../config/all_villa_str');
+                const allRules = ALL_VILLA_STR_RULES.flatMap(section => section.rules || []);
+
+                // For mock mode, we assume pass unless filename contains "fail"
+                const shouldFail = originalName.toLowerCase().includes('fail');
+
+                const checks = allRules.map(rule => ({
+                    rule_id: rule.rule_id,
+                    title: rule.description_en,
+                    description_ar: rule.description_ar,
+                    status: shouldFail && rule.rule_id === 'STR-1' ? 'fail' : 'pass',
+                    issue: shouldFail && rule.rule_id === 'STR-1' ? 'Grid alignment mismatch detected' : undefined,
+                    expected: "Match",
+                    actual: "Match"
+                }));
+
                 validationResult = {
-                    summary: { schema_pass: true, score: 99 },
-                    schema_pass: true,
-                    note: "Mock data file not found, using fallback object"
+                    schema_pass: !shouldFail,
+                    summary: {
+                        checks_total: checks.length,
+                        passed: checks.filter(c => c.status === 'pass').length,
+                        failed: checks.filter(c => c.status === 'fail').length,
+                        score: Math.round((checks.filter(c => c.status === 'pass').length / checks.length) * 100)
+                    },
+                    checks: checks,
+                    note: "Structural validation generated from all_villa_str rules"
                 };
+            } catch (err) {
+                console.error("Failed to generate structural validation:", err);
+                validationResult = { schema_pass: false, error: "Structural config load failed" };
             }
-        } catch (e) {
-            console.error("Failed to load mock data:", e);
-            validationResult = { schema_pass: true, error: "Mock load failed" };
+        } else if (groupType === 'farm' || req.body.projectType === 'farm') {
+            // 2a. Farm (Ezba) Architectural logic
+            const farmMockPath = path.join(__dirname, "..", "data", "farm_mock_result.json");
+            const fallbackMockPath = path.join(__dirname, "..", "data", "mock_validation_result.json");
+
+            try {
+                if (fs.existsSync(farmMockPath)) {
+                    const raw = fs.readFileSync(farmMockPath, "utf-8");
+                    validationResult = JSON.parse(raw);
+                    validationResult.note = "Farm (Ezba) specialized validation results";
+                } else if (fs.existsSync(fallbackMockPath)) {
+                    const raw = fs.readFileSync(fallbackMockPath, "utf-8");
+                    validationResult = JSON.parse(raw);
+                    validationResult.note = "Farm validation (Fallback mock)";
+                } else {
+                    validationResult = {
+                        summary: { schema_pass: true, score: 100 },
+                        schema_pass: true,
+                        note: "Farm mock fallback (Empty)"
+                    };
+                }
+            } catch (e) {
+                console.error("Failed to load Farm mock:", e);
+                validationResult = { schema_pass: true, error: "Farm mock load failed" };
+            }
+        } else if (groupType === 'seaside_resort' || req.body.projectType === 'seaside_resort') {
+            // 2a. Seaside Resort Architectural logic
+            const resortMockPath = path.join(__dirname, "..", "data", "seaside_resort_mock_result.json");
+            const fallbackMockPath = path.join(__dirname, "..", "data", "mock_validation_result.json");
+
+            try {
+                if (fs.existsSync(resortMockPath)) {
+                    const raw = fs.readFileSync(resortMockPath, "utf-8");
+                    validationResult = JSON.parse(raw);
+                    validationResult.note = "Seaside Resort specialized validation results";
+                } else if (fs.existsSync(fallbackMockPath)) {
+                    const raw = fs.readFileSync(fallbackMockPath, "utf-8");
+                    validationResult = JSON.parse(raw);
+                    validationResult.note = "Seaside Resort validation (Fallback mock)";
+                } else {
+                    validationResult = {
+                        summary: { schema_pass: true, score: 100 },
+                        schema_pass: true,
+                        note: "Seaside Resort mock fallback (Empty)"
+                    };
+                }
+            } catch (e) {
+                console.error("Failed to load Seaside Resort mock:", e);
+                validationResult = { schema_pass: true, error: "Seaside Resort mock load failed" };
+            }
+        } else if (groupType === 'office_tower' || req.body.projectType === 'office_tower') {
+            // 2a. Office Tower Architectural logic
+            const officeTowerMockPath = path.join(__dirname, "..", "data", "office_tower_mock_result.json");
+            const fallbackMockPath = path.join(__dirname, "..", "data", "mock_validation_result.json");
+
+            try {
+                if (fs.existsSync(officeTowerMockPath)) {
+                    const raw = fs.readFileSync(officeTowerMockPath, "utf-8");
+                    validationResult = JSON.parse(raw);
+                    validationResult.note = "Office Tower specialized validation results";
+                } else if (fs.existsSync(fallbackMockPath)) {
+                    const raw = fs.readFileSync(fallbackMockPath, "utf-8");
+                    validationResult = JSON.parse(raw);
+                    validationResult.note = "Office Tower validation (Fallback mock)";
+                } else {
+                    validationResult = {
+                        summary: { schema_pass: true, score: 100 },
+                        schema_pass: true,
+                        note: "Office Tower mock fallback (Empty)"
+                    };
+                }
+                // Inject articles configuration for the frontend report
+                validationResult.articles = OFFICE_TOWER_ARTICLES;
+            } catch (e) {
+                console.error("Failed to load Office Tower mock:", e);
+                validationResult = { schema_pass: true, error: "Office Tower mock load failed" };
+            }
+        } else if (groupType === 'office_building' || req.body.projectType === 'office_building') {
+            // 2a. Office Building Architectural logic
+            const officeMockPath = path.join(__dirname, "..", "data", "office_mock_result.json");
+            const fallbackMockPath = path.join(__dirname, "..", "data", "mock_validation_result.json");
+
+            try {
+                if (fs.existsSync(officeMockPath)) {
+                    const raw = fs.readFileSync(officeMockPath, "utf-8");
+                    validationResult = JSON.parse(raw);
+                    validationResult.note = "Standardized office validation results";
+                } else if (fs.existsSync(fallbackMockPath)) {
+                    const raw = fs.readFileSync(fallbackMockPath, "utf-8");
+                    validationResult = JSON.parse(raw);
+                    validationResult.note = "Office validation (Fallback mock)";
+                } else {
+                    validationResult = {
+                        summary: { schema_pass: true, score: 92 },
+                        schema_pass: true,
+                        note: "Office mock fallback (Empty)"
+                    };
+                }
+                // Inject articles configuration for the frontend report
+                validationResult.articles = getOfficeArticles();
+            } catch (e) {
+                console.error("Failed to load Office mock:", e);
+                validationResult = { schema_pass: true, error: "Office mock load failed" };
+            }
+        } else if (groupType === 'alfalah_villa' || req.body.projectType === 'alfalah_villa') {
+            // 2b. Al Falah Architectural logic (Load specialized mock or rules)
+            const alfalahMockPath = path.join(__dirname, "..", "data", "alfalah_mock_result.json");
+            const fallbackMockPath = path.join(__dirname, "..", "data", "mock_validation_result.json");
+
+            try {
+                if (fs.existsSync(alfalahMockPath)) {
+                    const raw = fs.readFileSync(alfalahMockPath, "utf-8");
+                    validationResult = JSON.parse(raw);
+                    validationResult.note = "Al Falah specialized validation results";
+                } else if (fs.existsSync(fallbackMockPath)) {
+                    const raw = fs.readFileSync(fallbackMockPath, "utf-8");
+                    validationResult = JSON.parse(raw);
+                    validationResult.note = "Al Falah validation (Fallback mock)";
+                } else {
+                    validationResult = {
+                        summary: { schema_pass: true, score: 100 },
+                        schema_pass: true,
+                        note: "Al Falah mock fallback (Empty)"
+                    };
+                }
+                // Inject articles configuration for the frontend report
+                validationResult.articles = getAlFalahArticles();
+            } catch (e) {
+                console.error("Failed to load Al Falah mock:", e);
+                validationResult = { schema_pass: true, error: "Al Falah mock load failed" };
+            }
+        } else {
+            // 3. Default Architectural logic (Load mock data)
+            const mockDataPath = path.join(__dirname, "..", "data", "mock_validation_result.json");
+            try {
+                if (fs.existsSync(mockDataPath)) {
+                    const raw = fs.readFileSync(mockDataPath, "utf-8");
+                    validationResult = JSON.parse(raw);
+                } else {
+                    validationResult = {
+                        summary: { schema_pass: true, score: 99 },
+                        schema_pass: true,
+                        note: "Mock data file not found, using fallback object"
+                    };
+                }
+            } catch (e) {
+                console.error("Failed to load mock data:", e);
+                validationResult = { schema_pass: true, error: "Mock load failed" };
+            }
         }
 
         // Save validation result
@@ -343,6 +537,7 @@ async function validateDwg(req, res) {
                 $set: {
                     processing_status: "done",
                     latest_validation_result_id: valRes.insertedId.toString(),
+                    results: validationResult, // ✅ Added for specialized results endpoints
                     artifacts: {
                         dwg_path: finalDwgPath,
                         // No DXF generated in mock mode
@@ -395,7 +590,8 @@ async function validateDwg(req, res) {
  */
 async function getConfig(req, res) {
     try {
-        return res.json(get_all_articles());
+        const projectType = req.query.projectType;
+        return res.json(getArticlesForType(projectType));
     } catch (error) {
         return res.status(500).json({ error: error.message, status: "error" });
     }

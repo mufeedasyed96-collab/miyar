@@ -86,18 +86,36 @@ router.post('/:projectId/upload', upload.single('file'), async (req, res) => {
         const nextVersion = (latestVersion?.version_number || 0) + 1;
 
         // 3. Create File Version
-        // Store dummy result directly in the version for history retrieval
+        // Load structural rules from config
+        const { ALL_VILLA_STR_RULES } = require('../config/all_villa_str');
+
+        // Map rules to result format
+        // Default to "pass" for all rules in this mock implementation
+        // Only trigger failure if file name contains "fail" for testing
+        const shouldFail = file.originalname.toLowerCase().includes('fail');
+
+        // Flatten nested rules array from config
+        const allRules = ALL_VILLA_STR_RULES.flatMap(section => section.rules || []);
+
+        const checks = allRules.map(rule => ({
+            rule_id: rule.rule_id,
+            title: rule.description_en, // Use description as title
+            status: shouldFail && rule.rule_id === 'STR-1' ? 'fail' : 'pass',
+            issue: shouldFail && rule.rule_id === 'STR-1' ? 'Grid alignment mismatch detected' : undefined,
+            description_ar: rule.description_ar
+        }));
+
+        const passedCount = checks.filter(c => c.status === 'pass').length;
+        const failedCount = checks.length - passedCount;
+
         const dummyResult = {
-            schema_pass: true,
-            summary: { checks_total: 6, passed: 6, failed: 0 },
-            checks: [
-                { rule_id: "S-1", title: "Column grid detected", status: "pass" },
-                { rule_id: "S-2", "title": "Beam continuity mock", "status": "pass" },
-                { rule_id: "S-3", "title": "Load path validation", "status": "pass" },
-                { rule_id: "S-4", "title": "Material properties check", "status": "pass" },
-                { rule_id: "S-5", "title": "Section adequacy", "status": "pass" },
-                { rule_id: "S-6", "title": "Deflection limits", "status": "pass" }
-            ]
+            schema_pass: failedCount === 0,
+            summary: {
+                checks_total: checks.length,
+                passed: passedCount,
+                failed: failedCount
+            },
+            checks: checks
         };
 
         const newVersion = {

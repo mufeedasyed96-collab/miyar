@@ -14,12 +14,14 @@
             "id": "1.1",
             "status": "pass",
             "description": "Building Official term defined",
+            "description_ar": "تعريف مصطلح مسؤول البناء",
             "value": "Present"
         },
         {
             "id": "1.2",
             "status": "pass",
             "description": "Building Code term defined",
+            "description_ar": "تعريف مصطلح كود البناء",
             "value": "Present"
         }
     ],
@@ -28,6 +30,7 @@
             "id": "2.1",
             "status": "pass",
             "description": "Residential Use Only",
+            "description_ar": "الاستخدام السكني فقط",
             "value": "Confirmed"
         }
     ],
@@ -36,6 +39,7 @@
             "id": "3.1",
             "status": "pass",
             "description": "Permitted Components",
+            "description_ar": "المكونات المسموح بها",
             "value": "Villa, Majlis, Service Block"
         }
     ],
@@ -44,6 +48,7 @@
             "id": "4.1",
             "status": "pass",
             "description": "Single Villa Per Plot",
+            "description_ar": "فيلا واحدة لكل قسيمة",
             "value": "1 Villa Detected"
         }
     ],
@@ -52,12 +57,14 @@
             "id": "5.1",
             "status": "pass",
             "description": "Building Coverage Max 70%",
+            "description_ar": "تغطية البناء القصوى ٧٠%",
             "value": "65%"
         },
         {
             "id": "5.2",
             "status": "pass",
             "description": "Open Area Min 30%",
+            "description_ar": "الحد الأدنى للمنطقة المفتوحة ٣٠%",
             "value": "35%"
         }
     ],
@@ -66,12 +73,14 @@
             "id": "6.1",
             "status": "pass",
             "description": "Front Setback Min 2.0m",
+            "description_ar": "الحد الأدنى للارتداد الأمامي ٢.٠ م",
             "value": "2.1m"
         },
         {
             "id": "6.1",
             "status": "fail",
             "description": "Side Setback Min 1.5m",
+            "description_ar": "الحد الأدنى للارتداد الجانبي ١.٥ م",
             "value": "1.2m (Violation)"
         }
     ]

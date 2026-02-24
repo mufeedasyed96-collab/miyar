@@ -5,11 +5,28 @@
 
 // If road_config is in the same directory or accessible via require
 let ROAD_ARTICLES = [];
+let BRIDGE_ARTICLES = [];
+let TUNNEL_ARTICLES = [];
+
 try {
     const roadConfig = require('./config_roads');
     ROAD_ARTICLES = roadConfig.ROAD_ARTICLES || [];
 } catch (e) {
     console.warn("Could not load config_roads", e);
+}
+
+try {
+    const bridgeConfig = require('./bridge_config');
+    BRIDGE_ARTICLES = bridgeConfig.BRIDGE_ARTICLES || [];
+} catch (e) {
+    console.warn("Could not load bridge_config", e);
+}
+
+try {
+    const tunnelConfig = require('./tunnel_config');
+    TUNNEL_ARTICLES = tunnelConfig.TUNNEL_ARTICLES || [];
+} catch (e) {
+    console.warn("Could not load tunnel_config", e);
 }
 
 const ARTICLES = [
@@ -1266,8 +1283,8 @@ const ARTICLES = [
     }
 ]
 
-// Combine with ROAD_ARTICLES
-const ALL_ARTICLES = [...ARTICLES, ...ROAD_ARTICLES];
+// Combine with ROAD, BRIDGE, and TUNNEL ARTICLES
+const ALL_ARTICLES = [...ARTICLES, ...ROAD_ARTICLES, ...BRIDGE_ARTICLES, ...TUNNEL_ARTICLES];
 
 
 function get_article(article_id) {

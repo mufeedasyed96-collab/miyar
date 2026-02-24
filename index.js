@@ -81,6 +81,8 @@ app.use("/api/structural", require("./routes/structural.routes"));
 app.use("/api/fire-safety", require("./routes/fireSafety.routes"));
 app.use("/api", require("./routes/certificates.routes"));
 app.use("/api/bridge", require("./routes/bridge.routes"));
+app.use("/api/traffic", require("./routes/traffic.routes"));
+app.use("/api", require("./routes/dwg.routes"));
 
 // ✅ IMPORTANT: Always return JSON for missing /api routes
 // This prevents "Unexpected token '<'" when frontend calls res.json() on an HTML 404 page.

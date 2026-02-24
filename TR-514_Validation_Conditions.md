@@ -165,60 +165,56 @@
 
 ---
 
-# TUNNELS
+# TUNNELS (Refined)
 
-## T1: General Tunnel Design
+## T1: Tunnel Vertical Clearances
 
-| Condition ID | Description (EN) | Description (AR) | Rule Type | Requirements |
-|-------------|------------------|------------------|-----------|--------------|
-| T1.1 | Minimum vertical clearance in tunnels | الحد الأدنى للخلوص الرأسي في الأنفاق | dimension_min | Min 6.5m (6.0m for urban areas) |
-| T1.2 | Clearance to bottom of overhead signs and ventilation | الخلوص لأسفل اللافتات والتهوية | dimension_min | Min 6.5m |
-| T1.3 | Tunnel length optimization | تحسين طول النفق | design_principle | As short as practical |
+| Condition ID | Description (EN) | Description (AR) | Rule Type | Requirements | Section |
+|-------------|------------------|------------------|-----------|--------------|---------|
+| T1.1 | Highway tunnel vertical clearance | الخلوص الرأسي لأنفاق الطرق السريعة | dimension_min | Min 6.5m | §6.5 (4) |
+| T1.2 | Urban tunnel vertical clearance | الخلوص الرأسي للأنفاق الحضرية | dimension_min | Min 6.0m | §6.5 (4) |
+| T1.3 | Signs/ventilation vertical clearance | الخلوص الرأسي للافتات والتهوية | dimension_min | Min 6.5m | §6.5 (1) |
+| T1.4 | Pedestrian tunnel vertical clearance | الخلوص الرأسي لأنفاق المشاة | dimension_min | Min 3.5m | §6.5 |
 
-## T2: Horizontal Alignment
+## T2: Tunnel Cross Section
 
-| Condition ID | Description (EN) | Description (AR) | Rule Type | Requirements |
-|-------------|------------------|------------------|-----------|--------------|
-| T2.1 | Tunnel horizontal alignment | المحاذاة الأفقية للنفق | design_rule | Tangent alignment preferred |
-| T2.2 | Horizontal sight distance on curves | مسافة الرؤية الأفقية على المنحنيات | design_rule | Widening shoulder on inside of curves may be required |
+| Condition ID | Description (EN) | Description (AR) | Rule Type | Requirements | Section |
+|-------------|------------------|------------------|-----------|--------------|---------|
+| T2.1 | Roadway width inside tunnel | عرض الطريق داخل النفق | dimension_min | Approach + 0.6m | §3.10.3 |
+| T2.2 | Minimum curb/sidewalk width | الحد الأدنى لعرض الحافة/الرصيف | dimension_min | Min 0.6m | §3.10.3 |
+| T2.3 | 3-lane wall-to-wall width | العرض الكلي لنفق 3 حارات | dimension_min | Min 12.75m | §3.10.3 |
+| T2.4 | Desirable 3-lane section | المقطع المرغوب لـ 3 حارات | dimension | Lanes+Shoulders+Walkways | §3.10.3 |
+| T2.5 | Safety walkway width | عرض ممر السلامة | dimension | 0.9m | §3.10.3 |
 
-## T3: Vertical Alignment
+## T3: Tunnel Alignment
 
-| Condition ID | Description (EN) | Description (AR) | Rule Type | Requirements |
-|-------------|------------------|------------------|-----------|--------------|
-| T3.1 | Tunnel grades for driver comfort | ميول النفق لراحة السائق | design_principle | Balance construction costs vs. operating expenses |
-| T3.2 | Grade effects on lighting and ventilation | تأثير الميول على الإضاءة والتهوية | design_consideration | Consider length, grades, natural ventilation |
+| Condition ID | Description (EN) | Description (AR) | Rule Type | Requirements | Section |
+|-------------|------------------|------------------|-----------|--------------|---------|
+| T3.1 | Preferred tangent alignment | المحاذاة المستقيمة المفضلة | design_rule | Tangent preferred | §3.10.2 |
+| T3.2 | Sight distance on curves | مسافة الرؤية على المنحنيات | design_rule | Shoulder widening | §3.10.2 |
+| T3.3 | Grades for driver comfort | ميول النفق لراحة السائق | design_principle | Cost vs. Operations | §3.10.2 |
+| T3.4 | Grade effects on systems | تأثير الميول على الأنظمة | design_consideration | Lighting/Ventilation | §3.10.2 |
 
-## T4: Cross Section Elements
+## T4: Tunnel Traffic Operations
 
-| Condition ID | Description (EN) | Description (AR) | Rule Type | Requirements |
-|-------------|------------------|------------------|-----------|--------------|
-| T4.1 | Minimum roadway width between curbs | الحد الأدنى لعرض الطريق بين الحواف | dimension_min | At least 0.6m greater than approach travelled way |
-| T4.2 | Curb or sidewalk width on either side | عرض الحافة أو الرصيف على كل جانب | dimension_min | Min 0.6m |
-| T4.3 | Total clearance between walls (3-lane tunnel) | الخلوص الكلي بين الجدران (نفق 3 حارات) | dimension_min | Min 12.75m |
-| T4.4 | Desirable section for 3-lane tunnel | المقطع المرغوب لنفق 3 حارات | dimension | 3 x 3.65m lanes + 3.0m shoulders + 0.9m sidewalks each side |
-| T4.5 | Safety walk/maintenance access width | عرض ممر السلامة/الصيانة | dimension | 0.9m raised sidewalks beyond shoulder areas |
+| Condition ID | Description (EN) | Description (AR) | Rule Type | Requirements | Section |
+|-------------|------------------|------------------|-----------|--------------|---------|
+| T4.1 | Exit ramp distance from portal | مسافة رامب الخروج من البوابة | spacing_min | Min 300m | §12.3.3 |
+| T4.2 | No weaving/merging/diverging | لا نسج/دمج/تفرع | design_rule | Prohibition within tunnel | §12.3.13 |
 
-## T5: Traffic Operations
+## T5: Emergency and Maintenance
 
-| Condition ID | Description (EN) | Description (AR) | Rule Type | Requirements |
-|-------------|------------------|------------------|-----------|--------------|
-| T5.1 | Exit ramps minimum distance from tunnel portal | الحد الأدنى لمسافة رامبات الخروج من بوابة النفق | spacing_min | Min 300m downstream |
-| T5.2 | No weaving, merging, or diverging within tunnels | لا نسج أو دمج أو تفرع داخل الأنفاق | design_rule | Avoid exit/entrance ramps within tunnels |
+| Condition ID | Description (EN) | Description (AR) | Rule Type | Requirements | Section |
+|-------------|------------------|------------------|-----------|--------------|---------|
+| T5.1 | Emergency vehicles provision | مركبات الطوارئ | operational | 24/7 if no shoulders | §3.10.2 |
+| T5.2 | Maintenance/Pedestrian access | وصول الصيانة/المشاة | design_rule | Emergency walking space | §3.10.3 |
 
-## T6: Emergency and Maintenance
+## T6: Special Tunnel Types
 
-| Condition ID | Description (EN) | Description (AR) | Rule Type | Requirements |
-|-------------|------------------|------------------|-----------|--------------|
-| T6.1 | Emergency service vehicle provision | توفير مركبات الطوارئ | operational | 24/7 emergency service vehicles if no shoulders |
-| T6.2 | Pedestrian access in tunnels | وصول المشاة في الأنفاق | design_rule | Space for emergency walking and maintenance access |
-
-## T7: Special Tunnel Types
-
-| Condition ID | Description (EN) | Description (AR) | Rule Type | Requirements |
-|-------------|------------------|------------------|-----------|--------------|
-| T7.1 | Pedestrian tunnel minimum vertical clearance | الخلوص الرأسي الأدنى لأنفاق المشاة | dimension_min | Min 3.5m |
-| T7.2 | Separate tunnels for pedestrians/cyclists | أنفاق منفصلة للمشاة/الدراجات | design_consideration | May be warranted for special uses |
+| Condition ID | Description (EN) | Description (AR) | Rule Type | Requirements | Section |
+|-------------|------------------|------------------|-----------|--------------|---------|
+| T6.1 | Pedestrian tunnel clearance | خلوص أنفاق المشاة | dimension_min | Min 3.5m | §6.5 |
+| T6.2 | Separate ped/cycle tunnels | أنفاق مشاة/دراجات منفصلة | design_consideration | Special use warrant | §3.10.1 |
 
 ---
 
@@ -226,10 +222,10 @@
 
 | Category | Total Conditions | Key Reference Sections |
 |----------|------------------|------------------------|
-| **Roads** | 39 | Chapters 3, 6, 7, 8, 9, 10, 13 |
-| **Bridges** | 14 | Chapter 3.5, 7.4.9, 8.3.8 |
-| **Tunnels** | 13 | Section 3.10 |
-| **Total** | **66** | |
+| **Roads** | 39 | Chapters 2.4, 3, 4, 5, 6, 9.3.6, 10, 11, 12 |
+| **Bridges** | 14 | Section 7.4.4, 7.4.6, 7.4.9, 7.4.10 |
+| **Tunnels** | 19 | Section 3.10, 6.5, 12.3.13 |
+| **Total** | **72** | |
 
 ---
 

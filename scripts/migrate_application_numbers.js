@@ -11,7 +11,7 @@ const PREFIX_MAP = {
     VIL: ["villa", "all_villa", "alfalah_villa", "yas_villa"],
     RES: ["resort"],
     COM: ["commercial", "warehouse", "shopping_mall", "office_building"],
-    INF: ["infrastructure", "roads_bridges", "utilities", "drainage"],
+    INF: ["infrastructure", "roads_bridges", "drainage"],
 };
 
 function getPrefix(projectType) {
